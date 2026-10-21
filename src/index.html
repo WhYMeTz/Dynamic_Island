@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dynamic Island</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div class="island-wrapper">
+
+    <div class="dynamic-island" id="island" data-state="compact">
+      <!-- Sayap Lengkungan (Inverted Ears) Kiri dan Kanan Menempel ke Bezel Atas -->
+      <svg class="notch-ear ear-left" width="16" height="16" viewBox="0 0 16 16">
+        <path d="M 0 0 Q 16 0 16 16 L 16 0 Z" fill="#000000" />
+      </svg>
+      <svg class="notch-ear ear-right" width="16" height="16" viewBox="0 0 16 16">
+        <path d="M 16 0 Q 0 0 0 16 L 0 0 Z" fill="#000000" />
+      </svg>
+
+      <!-- Ambient Glow di Bagian Bawah Notch -->
+      <div class="island-ambient-glow"></div>
+
+      <!-- ROBOT LEWAT RUNNER (Robot Melintas Jalan di Dynamic Island) -->
+      <div class="robot-walker-runner" id="robot-walker-runner" title="Robot Lewat!">
+        <svg class="robot-svg" viewBox="0 0 44 42" width="30" height="28">
+          <ellipse class="robot-thrust" cx="22" cy="38" rx="6" ry="2.2" fill="#38bdf8" />
+          <g class="robot-body-group">
+            <path class="robot-arm-left" d="M 10 24 Q 7 28 8 32" fill="none" stroke="#e2e8f0" stroke-width="2.4" stroke-linecap="round" />
+            <circle cx="8" cy="32" r="2.2" fill="#38bdf8" />
+            <rect x="13" y="21" width="18" height="13" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" />
+            <circle cx="22" cy="27.5" r="3" fill="#0284c7" />
+            <circle class="core-light" cx="22" cy="27.5" r="1.8" fill="#38bdf8" />
+            <line x1="22" y1="9" x2="22" y2="4" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" />
+            <circle class="antenna-ball" cx="22" cy="3" r="2.4" fill="#f97316" />
+            <rect x="11" y="9" width="22" height="15" rx="6.5" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" />
+            <rect x="13" y="11" width="18" height="11" rx="4" fill="#0f172a" />
+            <g class="robot-eyes">
+              <path class="robot-eye" d="M 15.5 16.5 Q 17.5 14 19.5 16.5" fill="none" stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round" />
+              <path class="robot-eye" d="M 24.5 16.5 Q 26.5 14 28.5 16.5" fill="none" stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round" />
+            </g>
+            <g class="robot-arm-right-group">
+              <path class="robot-arm-right" d="M 31 22 Q 36 20 38 14 Q 40 9 37 7" fill="none" stroke="#e2e8f0" stroke-width="2.6" stroke-linecap="round" />
+              <circle cx="37" cy="7" r="2.5" fill="#f97316" />
+              <path class="wave-sparkle" d="M 40 4 L 42 2 M 42 8 L 44 8" stroke="#fbbf24" stroke-width="1.4" stroke-linecap="round" />
+            </g>
+          </g>
+        </svg>
+      </div>
+
+      <!-- ============================================== -->
+      <!-- STATE 1: MINIMALIST GLOWING WHITE OVALS (Persis Gambar Awal) -->
+      <!-- ============================================== -->
+      <div class="island-view view-eyes" id="view-eyes">
+        <div class="glow-eyes-container" id="glow-eyes-group">
+          <div class="glow-oval-eye eye-left" id="eye-left"></div>
+          <div class="glow-oval-eye eye-right" id="eye-right"></div>
+        </div>
+      </div>
+
+      <!-- ============================================== -->
+      <!-- STATE 2: COMPACT BAR (Robot Dada-Dada + Clock + Waveform) -->
+      <!-- ============================================== -->
+      <div class="island-view view-compact" id="view-compact">
+        <div class="compact-left">
+          <!-- Robot Animasi Lucu Melayang & Dada-Dada di Compact Mode! -->
+          <div class="compact-robot-wrap" id="compact-robot-wrap" title="Halo! (Klik untuk lihat robot lewat & berputar!)">
+            <svg class="robot-svg" viewBox="0 0 44 42" width="26" height="24">
+              <ellipse class="robot-thrust" cx="22" cy="38" rx="6" ry="2.2" fill="#38bdf8" />
+              <g class="robot-body-group">
+                <path class="robot-arm-left" d="M 10 24 Q 7 28 8 32" fill="none" stroke="#e2e8f0" stroke-width="2.4" stroke-linecap="round" />
+                <circle cx="8" cy="32" r="2.2" fill="#38bdf8" />
+                <rect x="13" y="21" width="18" height="13" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" />
+                <circle cx="22" cy="27.5" r="3" fill="#0284c7" />
+                <circle class="core-light" cx="22" cy="27.5" r="1.8" fill="#38bdf8" />
+                <line x1="22" y1="9" x2="22" y2="4" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" />
+                <circle class="antenna-ball" cx="22" cy="3" r="2.4" fill="#f97316" />
+                <rect x="11" y="9" width="22" height="15" rx="6.5" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" />
+                <rect x="13" y="11" width="18" height="11" rx="4" fill="#0f172a" />
+                <g class="robot-eyes">
+                  <path class="robot-eye" d="M 15.5 16.5 Q 17.5 14 19.5 16.5" fill="none" stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round" />
+                  <path class="robot-eye" d="M 24.5 16.5 Q 26.5 14 28.5 16.5" fill="none" stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round" />
+                </g>
+                <g class="robot-arm-right-group">
+                  <path class="robot-arm-right" d="M 31 22 Q 36 20 38 14 Q 40 9 37 7" fill="none" stroke="#e2e8f0" stroke-width="2.6" stroke-linecap="round" />
+                  <circle cx="37" cy="7" r="2.5" fill="#f97316" />
+                  <path class="wave-sparkle" d="M 40 4 L 42 2 M 42 8 L 44 8" stroke="#fbbf24" stroke-width="1.4" stroke-linecap="round" />
+                </g>
+              </g>
+            </svg>
+          </div>
+          <!-- Baterai disembunyikan agar tampilan bersih & tidak terlalu ramai sesuai request user -->
+          <div class="battery-gauge hidden" id="compact-battery-gauge">
+            <svg viewBox="0 0 36 36" class="battery-gauge-chart">
+              <path class="gauge-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+              <path class="gauge-fill" id="compact-battery-circle" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+            </svg>
+            <svg class="gauge-bolt hidden" id="compact-battery-bolt" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="13 2 4 14 11 14 10 22 20 10 13 10 13 2"></polygon>
+            </svg>
+          </div>
+        </div>
+        
+        <div class="compact-center">
+          <span class="digital-clock" id="compact-clock">10:01</span>
+        </div>
+
+        <div class="compact-right">
+          <!-- Equalizer Bar Animasi -->
+          <div class="equalizer active" id="compact-equalizer">
+            <span class="bar bar-1"></span>
+            <span class="bar bar-2"></span>
+            <span class="bar bar-3"></span>
+            <span class="bar bar-4"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================== -->
+      <!-- STATE: STARTUP / WELCOME BANNER (Popup Keren)  -->
+      <!-- ============================================== -->
+      <div class="island-view view-welcome" id="view-welcome">
+        <div class="banner-left">
+          <!-- Robot Animasi Lucu Melayang & Dada-Dada (Waving Robot) -->
+          <div class="welcome-robot-wrap" id="welcome-robot-wrap" title="Halo! (Klik aku!)">
+            <svg class="robot-svg" viewBox="0 0 44 42" width="38" height="36">
+              <!-- Jet Thruster Glow di bawah badan -->
+              <ellipse class="robot-thrust" cx="22" cy="38" rx="6" ry="2.2" fill="#38bdf8" />
+              
+              <!-- Grup Badan Robot yang Melayang -->
+              <g class="robot-body-group">
+                <!-- Tangan Kiri (Rileks) -->
+                <path class="robot-arm-left" d="M 10 24 Q 7 28 8 32" fill="none" stroke="#e2e8f0" stroke-width="2.4" stroke-linecap="round" />
+                <circle cx="8" cy="32" r="2.2" fill="#38bdf8" />
+
+                <!-- Badan Torso Bulat Halus -->
+                <rect x="13" y="21" width="18" height="13" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" />
+                <!-- Core Reactor Light di dada (Cyan Pulse) -->
+                <circle cx="22" cy="27.5" r="3" fill="#0284c7" />
+                <circle class="core-light" cx="22" cy="27.5" r="1.8" fill="#38bdf8" />
+
+                <!-- Antena di Kepala dengan Lampu Oranye Berdenyut -->
+                <line x1="22" y1="9" x2="22" y2="4" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" />
+                <circle class="antenna-ball" cx="22" cy="3" r="2.4" fill="#f97316" />
+
+                <!-- Kepala Helm Astronot Robot -->
+                <rect x="11" y="9" width="22" height="15" rx="6.5" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" />
+                <!-- Kaca Visor Gelap Mengkilap -->
+                <rect x="13" y="11" width="18" height="11" rx="4" fill="#0f172a" />
+
+                <!-- Mata LED Digital Berpendar & Berkedip (Happy Cyan Arcs) -->
+                <g class="robot-eyes" id="robot-eyes">
+                  <path class="robot-eye" d="M 15.5 16.5 Q 17.5 14 19.5 16.5" fill="none" stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round" />
+                  <path class="robot-eye" d="M 24.5 16.5 Q 26.5 14 28.5 16.5" fill="none" stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round" />
+                </g>
+
+                <!-- Tangan Kanan Melambai-lambai (Robot Dada-dada! 👋) -->
+                <g class="robot-arm-right-group">
+                  <path class="robot-arm-right" d="M 31 22 Q 36 20 38 14 Q 40 9 37 7" fill="none" stroke="#e2e8f0" stroke-width="2.6" stroke-linecap="round" />
+                  <circle cx="37" cy="7" r="2.5" fill="#f97316" />
+                  <!-- Percikan Berpendar dari Lambaian Tangan -->
+                  <path class="wave-sparkle" d="M 40 4 L 42 2 M 42 8 L 44 8" stroke="#fbbf24" stroke-width="1.4" stroke-linecap="round" />
+                </g>
+              </g>
+            </svg>
+          </div>
+        </div>
+
+        <div class="banner-middle">
+          <h4 class="banner-title" id="welcome-title">Welcome back!</h4>
+          <p class="banner-subtitle" id="welcome-subtitle">System Ready · All systems nominal 🚀</p>
+        </div>
+
+        <div class="banner-right">
+          <div class="welcome-status-pill">
+            <span class="online-dot"></span>
+            <span class="welcome-pill-text" id="welcome-pill-text">ONLINE</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================== -->
+      <!-- STATE 3: CHARGING BANNER (Persis Gambar 1)     -->
+      <!-- ============================================== -->
+      <div class="island-view view-charging" id="view-charging">
+        <div class="banner-left">
+          <div class="battery-ring charging-pulse">
+            <svg viewBox="0 0 36 36" class="circular-chart">
+              <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+              <path class="circle" id="charging-alert-circle" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+            </svg>
+            <span class="bolt-icon">⚡</span>
+          </div>
+        </div>
+
+        <div class="banner-middle">
+          <h4 class="banner-title">Charging</h4>
+          <p class="banner-subtitle">Charger connected</p>
+        </div>
+
+        <div class="banner-right">
+          <span class="charging-big-percent" id="charging-alert-percent">--%</span>
+        </div>
+      </div>
+
+      <!-- ============================================== -->
+      <!-- STATE 4: TWS EARBUDS BANNER (Persis Video 00:09) -->
+      <!-- ============================================== -->
+      <div class="island-view view-tws" id="view-tws">
+        <div class="banner-left">
+          <div class="tws-bluetooth-badge">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6.5 6.5l11 11L12 23V1l5.5 5.5-11 11"></path>
+            </svg>
+          </div>
+        </div>
+
+        <div class="banner-middle">
+          <h4 class="banner-title" id="tws-device-name">Baseus Encok WM01</h4>
+          <p class="banner-subtitle" id="tws-device-status">Terhubung · 100%</p>
+        </div>
+
+        <div class="banner-right">
+          <!-- Animated Headset Companion dengan Gelombang Suara (Persis Video) -->
+          <div class="headphone-animated-wrap" id="headphone-animated-wrap">
+            <div class="headphone-backlight-aura"></div>
+            <div class="tws-sonar-ring ring-1"></div>
+            <div class="tws-sonar-ring ring-2"></div>
+            <div class="headphone-badge-circle">
+              <svg class="headphone-svg-animated" width="22" height="22" viewBox="0 0 32 32" fill="none">
+                <!-- Soundwaves Kiri & Kanan Beranimasi Memancar -->
+                <path class="hp-wave wave-l2" d="M 2 13 A 7 7 0 0 0 2 23" stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round" />
+                <path class="hp-wave wave-l1" d="M 4.5 15 A 4.5 4.5 0 0 0 4.5 21" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" />
+                <path class="hp-wave wave-r1" d="M 27.5 15 A 4.5 4.5 0 0 1 27.5 21" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" />
+                <path class="hp-wave wave-r2" d="M 30 13 A 7 7 0 0 1 30 23" stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round" />
+
+                <!-- Lengkungan Headband Headset Modern Apple-Style -->
+                <path class="hp-arch" d="M 7.5 17.5 C 7.5 10 11.2 5.5 16 5.5 C 20.8 5.5 24.5 10 24.5 17.5" stroke="#ffffff" stroke-width="2.8" stroke-linecap="round" />
+
+                <!-- Bantalan Earcup Kiri (Rounded Pill Capsule) -->
+                <rect class="hp-cup hp-cup-left" x="5.5" y="15" width="4.8" height="10" rx="2.4" fill="#ffffff" />
+                <rect x="7" y="16.5" width="2" height="7" rx="1" fill="#0f172a" opacity="0.3" />
+
+                <!-- Bantalan Earcup Kanan (Rounded Pill Capsule) -->
+                <rect class="hp-cup hp-cup-right" x="21.7" y="15" width="4.8" height="10" rx="2.4" fill="#ffffff" />
+                <rect x="23" y="16.5" width="2" height="7" rx="1" fill="#0f172a" opacity="0.3" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================== -->
+      <!-- STATE: VOLUME HUD BANNER (Persis Video 00:15)  -->
+      <!-- ============================================== -->
+      <div class="island-view view-volume" id="view-volume">
+        <div class="volume-icon-wrap" id="volume-icon-wrap">
+          <!-- Speaker Icon SVG (Berubah wave saat volume naik/turun) -->
+          <svg class="volume-svg" id="volume-icon-speaker" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+            <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
+            <path class="vol-wave vol-wave-1" d="M15.54 8.46a5 5 0 0 1 0 7.07" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"></path>
+            <path class="vol-wave vol-wave-2" d="M19.07 4.93a10 10 0 0 1 0 14.14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"></path>
+          </svg>
+          <!-- Mute Icon (Cross) -->
+          <svg class="volume-svg hidden" id="volume-icon-mute" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+            <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
+            <line x1="23" y1="9" x2="17" y2="15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"></line>
+            <line x1="17" y1="9" x2="23" y2="15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"></line>
+          </svg>
+        </div>
+
+        <div class="volume-bar-container">
+          <div class="volume-bar-track">
+            <div class="volume-bar-fill" id="volume-bar-fill" style="width: 50%;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================== -->
+      <!-- STATE 4: EXPANDED PLAYER                       -->
+      <!-- ============================================== -->
+      <div class="island-view view-player" id="view-player">
+        <!-- Top Section: Album Art di kiri + Info Musik di kanan -->
+        <div class="player-top-section">
+          <!-- Album Art -->
+          <div class="album-art-wrap">
+            <div class="album-art" id="album-art">
+              <div class="vinyl-center"></div>
+            </div>
+          </div>
+
+          <!-- Info Col -->
+          <div class="player-info-col">
+            <!-- Baris 1: Maskot Animasi Lucu + Jam Tanggal + Equalizer -->
+            <div class="info-row-top">
+              <div class="header-datetime-wrap">
+                <!-- Cute Music Companion (Gerak-gerak lucu mendengarkan musik) -->
+                <div class="cute-companion" id="cute-companion" title="Klik aku untuk ganti ekspresi lucu!">
+                  <span class="music-note note-1">♪</span>
+                  <span class="music-note note-2">♫</span>
+                  <svg class="pet-svg" viewBox="0 0 40 36" width="28" height="25">
+                    <g class="pet-character" id="pet-character">
+                      <!-- Telinga Kucing Lucu -->
+                      <polygon class="pet-ear left" points="9,14 13,4 18,13" fill="#ffffff" />
+                      <polygon class="pet-ear-in left" points="11,13 13,7 16,12" fill="#ffb4a2" />
+                      <polygon class="pet-ear right" points="22,13 27,4 31,14" fill="#ffffff" />
+                      <polygon class="pet-ear-in right" points="24,12 27,7 29,13" fill="#ffb4a2" />
+                      
+                      <!-- Wajah Mochi Bulat -->
+                      <ellipse class="pet-face" cx="20" cy="20" rx="13.5" ry="11" fill="#ffffff" />
+                      
+                      <!-- Headband Headphone -->
+                      <path d="M 7 18 A 13 13 0 0 1 33 18" fill="none" stroke="#222222" stroke-width="2.6" stroke-linecap="round" />
+                      
+                      <!-- Earpad Headphone Oranye Menyala Senada Tema -->
+                      <rect class="pet-cup left" x="5" y="14" width="4" height="9" rx="2" fill="#f97316" />
+                      <rect class="pet-cup right" x="31" y="14" width="4" height="9" rx="2" fill="#f97316" />
+                      
+                      <!-- Pipi Merona Pink Menggemaskan -->
+                      <ellipse cx="12" cy="22" rx="2.2" ry="1.4" fill="#ff70a6" opacity="0.75" />
+                      <ellipse cx="28" cy="22" rx="2.2" ry="1.4" fill="#ff70a6" opacity="0.75" />
+                      
+                      <!-- Ekspresi Wajah Interaktif -->
+                      <g id="pet-expression">
+                        <!-- Senyum Bahagia Mendengarkan Musik (^ ^) -->
+                        <path class="pet-eye" d="M 13.5 19.5 Q 15.5 17 17.5 19.5" fill="none" stroke="#18181b" stroke-width="1.8" stroke-linecap="round" />
+                        <path class="pet-eye" d="M 22.5 19.5 Q 24.5 17 26.5 19.5" fill="none" stroke="#18181b" stroke-width="1.8" stroke-linecap="round" />
+                        <!-- Mulut Kucing :3 -->
+                        <path d="M 18.5 22.5 Q 20 23.8 21.5 22.5" fill="none" stroke="#18181b" stroke-width="1.4" stroke-linecap="round" />
+                      </g>
+                    </g>
+                  </svg>
+                </div>
+
+                <span class="player-date-time" id="player-datetime">Wed, 21 Oct · <b>10:02</b></span>
+              </div>
+
+              <div class="equalizer active mini" id="player-equalizer">
+                <span class="bar bar-1"></span>
+                <span class="bar bar-2"></span>
+                <span class="bar bar-3"></span>
+                <span class="bar bar-4"></span>
+              </div>
+            </div>
+
+            <!-- Baris 2: Judul Lagu + Tombol Chevron (>) -->
+            <div class="info-row-middle">
+              <h3 class="track-title" id="track-title">Paper Sky</h3>
+              <button class="icon-btn next-view-btn" id="btn-next-view" title="Lihat Lirik">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </button>
+            </div>
+
+            <!-- Baris 3: Artis / Album -->
+            <div class="info-row-bottom">
+              <p class="track-artist" id="track-artist">Lumen Coast — Summer Flows</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Progress Timeline -->
+        <div class="timeline-container">
+          <span class="time-current" id="time-current">03:13</span>
+          <div class="progress-bar" id="progress-bar">
+            <div class="progress-fill" id="progress-fill" style="width: 72%;"></div>
+            <div class="progress-thumb" id="progress-thumb" style="left: 72%;"></div>
+          </div>
+          <span class="time-remaining" id="time-remaining">-01:03</span>
+        </div>
+
+        <!-- Controls Navigasi Playback -->
+        <div class="player-controls">
+          <button class="control-btn lyrics-btn" id="btn-lyrics" title="Mode Lirik">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              <line x1="9" y1="10" x2="15" y2="10"></line>
+            </svg>
+          </button>
+
+          <div class="playback-buttons">
+            <button class="control-btn" id="btn-prev" title="Sebelumnya">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="11 19 2 12 11 5 11 19"></polygon>
+                <polygon points="22 19 13 12 22 5 22 19"></polygon>
+              </svg>
+            </button>
+
+            <button class="control-btn play-btn" id="btn-play" title="Play/Pause">
+              <svg class="icon-pause" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <rect x="6" y="4" width="4" height="16" rx="1"></rect>
+                <rect x="14" y="4" width="4" height="16" rx="1"></rect>
+              </svg>
+              <svg class="icon-play hidden" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+            </button>
+
+            <button class="control-btn" id="btn-next" title="Selanjutnya">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="13 19 22 12 13 5 13 19"></polygon>
+                <polygon points="2 19 11 12 2 5 2 19"></polygon>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Pagination Dots di paling bawah untuk ganti mode dengan mudah -->
+        <div class="pagination-bar">
+          <span class="dot active" data-view="player" title="Mode Player"></span>
+          <span class="dot" data-view="lyrics" title="Mode Lirik"></span>
+          <span class="dot" data-view="compact" title="Mode Jam & Baterai"></span>
+          <span class="dot" data-view="eyes" title="Mode Mata Kucing 🐱"></span>
+          <span class="dot hidden" id="dot-tws" data-view="tws" title="TWS Earbuds 🎧"></span>
+        </div>
+      </div>
+
+      <!-- ============================================== -->
+      <!-- STATE 5: EXPANDED LYRICS (Smooth Scrolling)   -->
+      <!-- ============================================== -->
+      <div class="island-view view-lyrics" id="view-lyrics">
+        <!-- Sisi Kiri: Mini Player -->
+        <div class="lyrics-left-player">
+          <div class="lyrics-player-top">
+            <div class="album-art small" id="lyrics-album-art">
+              <div class="vinyl-center"></div>
+            </div>
+            <div class="track-details small">
+              <h4 class="track-title" id="lyrics-track-title">Paper Sky</h4>
+              <p class="track-artist" id="lyrics-track-artist">Lumen Coast - Summ...</p>
+            </div>
+          </div>
+
+          <div class="timeline-container small">
+            <span class="time-current" id="lyrics-time-current">02:59</span>
+            <div class="progress-bar" id="lyrics-progress-bar">
+              <div class="progress-fill" id="lyrics-progress-fill" style="width: 68%;"></div>
+            </div>
+            <span class="time-remaining" id="lyrics-time-remaining">-01:17</span>
+          </div>
+
+          <div class="player-controls small">
+            <button class="control-btn lyrics-btn active" id="btn-lyrics-back" title="Tutup Lirik">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                <line x1="9" y1="10" x2="15" y2="10"></line>
+              </svg>
+            </button>
+            <button class="control-btn" id="btn-lyrics-prev" title="Sebelumnya">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="11 19 2 12 11 5 11 19"></polygon>
+                <polygon points="22 19 13 12 22 5 22 19"></polygon>
+              </svg>
+            </button>
+            <button class="control-btn play-btn-lyrics" id="btn-lyrics-play" title="Play/Pause">
+              <svg class="icon-pause" width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                <rect x="6" y="4" width="4" height="16" rx="1"></rect>
+                <rect x="14" y="4" width="4" height="16" rx="1"></rect>
+              </svg>
+              <svg class="icon-play hidden" width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+            </button>
+            <button class="control-btn" id="btn-lyrics-next" title="Selanjutnya">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="13 19 22 12 13 5 13 19"></polygon>
+                <polygon points="2 19 11 12 2 5 2 19"></polygon>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="lyrics-divider"></div>
+
+        <!-- Sisi Kanan: Viewport Lirik dengan Smooth Continuous Transform -->
+        <div class="lyrics-right-content">
+          <div class="lyrics-viewport" id="lyrics-viewport">
+            <div class="lyrics-list" id="lyrics-list">
+              <div class="lyric-item past">Morning folds the city light</div>
+              <div class="lyric-item current">into paper birds tonight</div>
+              <div class="lyric-item future">If I could be by your side</div>
+              <div class="lyric-item future">I'd give you all my seasons</div>
+              <div class="lyric-item future dim">every summer, every rain</div>
+              <div class="lyric-item future dim">calling out your name</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- DUAL ISLAND SATELLITE BUBBLE (Apple iOS Split Pill) -->
+    <div class="satellite-bubble hidden" id="satellite-bubble" title="Klik untuk beralih pemutar">
+      <svg class="notch-ear ear-left" width="16" height="16" viewBox="0 0 16 16">
+        <path d="M 0 0 Q 16 0 16 16 L 16 0 Z" fill="#000000" />
+      </svg>
+      <svg class="notch-ear ear-right" width="16" height="16" viewBox="0 0 16 16">
+        <path d="M 16 0 Q 0 0 0 16 L 0 0 Z" fill="#000000" />
+      </svg>
+      <div class="satellite-content">
+        <div class="satellite-icon-wrap" id="satellite-icon-wrap">
+          <svg class="satellite-icon icon-spotify" id="satellite-icon-spotify" viewBox="0 0 24 24" width="16" height="16" fill="#1db954">
+            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.494 17.306c-.215.352-.674.464-1.026.249-2.812-1.718-6.353-2.106-10.523-1.153-.403.092-.803-.159-.895-.562-.092-.403.159-.803.562-.895 4.571-1.045 8.492-.598 11.633 1.335.352.215.464.674.249 1.026zm1.467-3.262c-.271.44-.848.58-1.288.309-3.218-1.977-8.125-2.55-11.932-1.393-.497.151-1.023-.134-1.174-.631-.151-.497.134-1.023.631-1.174 4.357-1.322 9.774-.682 13.454 1.58.44.271.58.848.309 1.288zm.126-3.41c-3.858-2.29-10.222-2.502-13.896-1.387-.591.179-1.22-.162-1.399-.753-.179-.591.162-1.22.753-1.399 4.225-1.283 11.253-1.036 15.698 1.599.53.315.704 1.002.389 1.532-.315.53-1.002.704-1.545.408z"/>
+          </svg>
+          <svg class="satellite-icon icon-youtube hidden" id="satellite-icon-youtube" viewBox="0 0 24 24" width="16" height="16" fill="#ff0000">
+            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+          </svg>
+          <svg class="satellite-icon icon-media hidden" id="satellite-icon-media" viewBox="0 0 24 24" width="16" height="16" fill="#38bdf8">
+            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none" />
+            <polygon points="10 8 16 12 10 16 10 8" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="satellite-wave" id="satellite-wave">
+          <span class="sw-bar"></span>
+          <span class="sw-bar"></span>
+          <span class="sw-bar"></span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="main.js"></script>
+</body>
+
+</html>

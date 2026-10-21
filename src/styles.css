@@ -1,0 +1,1988 @@
+/* =========================================================
+   DYNAMIC ISLAND — STYLESHEET
+   Apple-grade Bouncy Physics, Ambient Sapphire Glow, Cat Eyes & Smooth Lyrics
+   ========================================================= */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body,
+html {
+  width: 100vw;
+  height: 100vh;
+  background-color: transparent !important;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  user-select: none;
+  -webkit-user-select: none;
+  pointer-events: none;
+}
+
+/* WADAH UTAMA MENEMPEL DI ATAS */
+.island-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10px;
+  padding-top: 0;
+  pointer-events: none;
+}
+
+/* =========================================================
+   BODY DYNAMIC ISLAND DENGAN AMBIENT SAPPHIRE GLOW
+   ========================================================= */
+.dynamic-island {
+  position: relative;
+  pointer-events: auto;
+  /* Hitam pekat solid tanpa bayangan blur ke bawah */
+  background: #000000;
+  color: #ffffff;
+  top: 0;
+  margin-top: 0;
+
+  /* State default: compact */
+  width: 185px;
+  height: 38px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+
+  /* Bersih total tanpa bayangan drop shadow yang bocor ke layar */
+  box-shadow: none;
+  cursor: pointer;
+
+  /* Animasi Transisi Super Halus & Organik (Apple Fluid Spring Bezier) */
+  transition: width 0.46s cubic-bezier(0.16, 1, 0.3, 1),
+              height 0.46s cubic-bezier(0.16, 1, 0.3, 1),
+              border-radius 0.46s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.44s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.36s ease-out;
+  transform-origin: top center;
+  transform: translateY(0px) scale(1);
+}
+
+/* =========================================================
+   AUTO-TUCK SAAT MEMBUKA HALAMAN FULLSCREEN / MAXIMIZED
+   (Meluncur super halus ke atas menyatu ke bezel monitor)
+   ========================================================= */
+.dynamic-island.tucked-notch {
+  width: 70px !important;
+  height: 0px !important;
+  opacity: 0 !important;
+  border-bottom-left-radius: 0px !important;
+  border-bottom-right-radius: 0px !important;
+  overflow: hidden !important;
+  transform: translateY(-100%) !important;
+  pointer-events: none !important;
+  transition: width 0.44s cubic-bezier(0.2, 0.9, 0.3, 1),
+              height 0.42s cubic-bezier(0.2, 0.9, 0.3, 1),
+              transform 0.44s cubic-bezier(0.2, 0.9, 0.3, 1),
+              opacity 0.34s ease-in,
+              border-radius 0.42s ease !important;
+}
+
+.dynamic-island.tucked-notch .island-view {
+  opacity: 0 !important;
+  transform: translateY(-10px) scale(0.9) !important;
+  transition: opacity 0.24s ease, transform 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  pointer-events: none !important;
+}
+
+.dynamic-island.tucked-notch::after,
+.dynamic-island.tucked-notch .notch-ear {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: opacity 0.3s ease !important;
+}
+
+/* Hilangkan ambient glow agar tidak ada bias/bayangan di bawah notch */
+.island-ambient-glow {
+  display: none !important;
+}
+
+/* SAYAP LENGKUNGAN ATAS (EARS) MENYATU KE BEZEL ATAS MONITOR */
+.notch-ear {
+  position: absolute;
+  top: 0;
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.ear-left {
+  right: 100%;
+}
+
+.ear-right {
+  left: 100%;
+}
+
+/* State 1: EYES (Notch agak panjang & semburat orange di bagian bawahnya) */
+.dynamic-island[data-state="eyes"] {
+  width: 220px;
+  height: 38px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  background: linear-gradient(180deg, #000000 0%, #000000 52%, #1a0800 74%, #451a03 88%, #9a3412 96%, #ea580c 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Semburat cahaya oranye di bagian bawah notch */
+.dynamic-island[data-state="eyes"]::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 55%;
+  background: radial-gradient(ellipse at 50% 100%, rgba(249, 115, 22, 0.5) 0%, rgba(234, 88, 12, 0.28) 45%, rgba(154, 52, 18, 0.1) 75%, transparent 100%);
+  pointer-events: none;
+  border-bottom-left-radius: inherit;
+  border-bottom-right-radius: inherit;
+  z-index: 1;
+}
+
+/* State 2: COMPACT */
+.dynamic-island[data-state="compact"] {
+  width: 185px;
+  height: 38px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.dynamic-island[data-state="compact"].dual-island {
+  width: 168px;
+}
+
+/* =========================================================
+   DUAL ISLAND SATELLITE BUBBLE (Apple iOS Split Pill)
+   ========================================================= */
+.satellite-bubble {
+  position: relative;
+  top: 0;
+  width: 42px;
+  height: 38px;
+  background: #000000;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 19px;
+  border-bottom-right-radius: 19px;
+  pointer-events: auto;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  box-shadow: none;
+
+  /* Apple Fluid Spring Physics */
+  transition: width 0.44s cubic-bezier(0.16, 1, 0.3, 1),
+              height 0.44s cubic-bezier(0.16, 1, 0.3, 1),
+              margin 0.44s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.44s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-origin: top center;
+  transform: translateY(0px) scale(1);
+}
+
+.satellite-bubble:hover {
+  transform: translateY(0px) scale(1.08);
+}
+
+.satellite-bubble:active {
+  transform: translateY(0px) scale(0.92);
+}
+
+.satellite-bubble.hidden {
+  opacity: 0 !important;
+  transform: translateY(-8px) scale(0.2) !important;
+  width: 0px !important;
+  margin-left: -10px !important;
+  pointer-events: none !important;
+  overflow: hidden !important;
+}
+
+/* Saat fullscreen/maximized auto-tuck */
+.satellite-bubble.tucked-notch,
+.dynamic-island.tucked-notch ~ .satellite-bubble {
+  height: 0px !important;
+  opacity: 0 !important;
+  transform: translateY(-100%) scale(0.6) !important;
+  width: 0px !important;
+  margin-left: -10px !important;
+  pointer-events: none !important;
+  transition: height 0.42s cubic-bezier(0.2, 0.9, 0.3, 1),
+              transform 0.44s cubic-bezier(0.2, 0.9, 0.3, 1),
+              opacity 0.34s ease-in !important;
+}
+
+/* Sembunyikan satellite bubble jika island sedang di mode selain compact */
+.dynamic-island:not([data-state="compact"]) ~ .satellite-bubble {
+  opacity: 0 !important;
+  transform: translateY(-8px) scale(0.2) !important;
+  width: 0px !important;
+  margin-left: -10px !important;
+  pointer-events: none !important;
+  overflow: hidden !important;
+}
+
+#compact-equalizer.app-spotify .bar {
+  background: #1db954;
+  box-shadow: 0 0 6px rgba(29, 185, 84, 0.5);
+}
+
+#compact-equalizer.app-youtube .bar {
+  background: #ff3b30;
+  box-shadow: 0 0 6px rgba(255, 59, 48, 0.5);
+}
+
+.satellite-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.satellite-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  transition: transform 0.25s ease;
+}
+
+.satellite-icon {
+  display: block;
+}
+
+.satellite-icon.hidden {
+  display: none !important;
+}
+
+/* Mini soundwave indicator inside satellite bubble */
+.satellite-wave {
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: flex-end;
+  gap: 1.5px;
+  height: 6px;
+  opacity: 0.85;
+}
+
+.sw-bar {
+  width: 2px;
+  height: 3px;
+  background: #ffffff;
+  border-radius: 1px;
+}
+
+.satellite-bubble.playing .sw-bar:nth-child(1) {
+  animation: swPulse 0.75s ease-in-out infinite alternate;
+}
+.satellite-bubble.playing .sw-bar:nth-child(2) {
+  animation: swPulse 0.55s ease-in-out infinite alternate 0.15s;
+}
+.satellite-bubble.playing .sw-bar:nth-child(3) {
+  animation: swPulse 0.85s ease-in-out infinite alternate 0.3s;
+}
+
+@keyframes swPulse {
+  0% { height: 2px; }
+  100% { height: 6px; }
+}
+
+/* Dynamic glow badges */
+.satellite-bubble.type-spotify .satellite-icon-wrap {
+  filter: drop-shadow(0 0 6px rgba(29, 185, 84, 0.45));
+}
+.satellite-bubble.type-youtube .satellite-icon-wrap {
+  filter: drop-shadow(0 0 6px rgba(255, 0, 0, 0.45));
+}
+
+
+/* State: STARTUP / WELCOME BANNER (Popup Keren) */
+.dynamic-island[data-state="welcome"] {
+  width: 340px;
+  height: 44px;
+  border-bottom-left-radius: 22px;
+  border-bottom-right-radius: 22px;
+  background: linear-gradient(180deg, #000000 0%, #000000 50%, #1a0800 75%, #451a03 88%, #9a3412 96%, #ea580c 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.dynamic-island[data-state="welcome"]::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 52%;
+  background: radial-gradient(ellipse at 50% 100%, rgba(249, 115, 22, 0.55) 0%, rgba(234, 88, 12, 0.28) 45%, rgba(154, 52, 18, 0.1) 75%, transparent 100%);
+  pointer-events: none;
+  border-bottom-left-radius: inherit;
+  border-bottom-right-radius: inherit;
+  z-index: 1;
+}
+
+/* State 3: CHARGING BANNER (Gambar 1) */
+.dynamic-island[data-state="charging"] {
+  width: 280px;
+  height: 42px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+/* State 4: TWS EARBUDS BANNER (Persis Video 00:09) */
+.dynamic-island[data-state="tws"] {
+  width: 320px;
+  height: 42px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+/* State: VOLUME HUD BANNER (Persis Video 00:15) */
+.dynamic-island[data-state="volume"] {
+  width: 275px;
+  height: 38px;
+  border-bottom-left-radius: 19px;
+  border-bottom-right-radius: 19px;
+}
+
+/* State 5: EXPANDED PLAYER */
+.dynamic-island[data-state="player"],
+.dynamic-island.hover-expanded:not([data-state="lyrics"]) {
+  width: 400px;
+  height: 136px;
+  border-bottom-left-radius: 28px;
+  border-bottom-right-radius: 28px;
+  background: linear-gradient(180deg, #000000 0%, #000000 50%, #1a0800 75%, #451a03 88%, #9a3412 96%, #ea580c 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.dynamic-island[data-state="player"]::after,
+.dynamic-island.hover-expanded:not([data-state="lyrics"])::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 52%;
+  background: radial-gradient(ellipse at 50% 100%, rgba(249, 115, 22, 0.48) 0%, rgba(234, 88, 12, 0.26) 45%, rgba(154, 52, 18, 0.1) 75%, transparent 100%);
+  pointer-events: none;
+  border-bottom-left-radius: inherit;
+  border-bottom-right-radius: inherit;
+  z-index: 1;
+}
+
+/* State 6: EXPANDED LYRICS (Warm Radiant Orange Ambient Glow di bagian bawah mengikuti mode mata) */
+.dynamic-island[data-state="lyrics"] {
+  width: 560px;
+  height: 136px;
+  border-bottom-left-radius: 28px;
+  border-bottom-right-radius: 28px;
+  background: linear-gradient(180deg, #000000 0%, #000000 48%, #1a0800 72%, #451a03 88%, #9a3412 96%, #ea580c 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.dynamic-island[data-state="lyrics"]::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 52%;
+  background: radial-gradient(ellipse at 50% 100%, rgba(249, 115, 22, 0.52) 0%, rgba(234, 88, 12, 0.28) 45%, rgba(154, 52, 18, 0.1) 75%, transparent 100%);
+  pointer-events: none;
+  border-bottom-left-radius: inherit;
+  border-bottom-right-radius: inherit;
+  z-index: 1;
+}
+
+/* =========================================================
+   VIEW VISIBILITY SYSTEM
+   ========================================================= */
+.island-view {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  opacity: 0;
+  transform: scale(0.94);
+  pointer-events: none;
+  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+  z-index: 2;
+}
+
+.dynamic-island[data-state="eyes"] .view-eyes,
+.dynamic-island[data-state="compact"] .view-compact,
+.dynamic-island[data-state="welcome"] .view-welcome,
+.dynamic-island[data-state="charging"] .view-charging,
+.dynamic-island[data-state="tws"] .view-tws,
+.dynamic-island[data-state="volume"] .view-volume {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: all;
+  transition: opacity 0.34s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.42s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Transisi Khusus yang Super Mulus antara Player dan Lyrics */
+.view-player {
+  transition: opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateX(0);
+}
+
+.view-lyrics {
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.42s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateX(28px);
+}
+
+/* Saat di mode Lyrics: player bergeser halus ke kiri */
+.dynamic-island[data-state="lyrics"] .view-player {
+  opacity: 0;
+  transform: translateX(-24px);
+  pointer-events: none;
+}
+
+/* Saat di mode Lyrics: lirik aktif dan berada di posisi normal */
+.dynamic-island[data-state="lyrics"] .view-lyrics {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: all;
+}
+
+/* Saat di mode Player: lirik sembunyi bergeser ke kanan */
+.dynamic-island[data-state="player"] .view-lyrics,
+.dynamic-island.hover-expanded:not([data-state="lyrics"]) .view-lyrics {
+  opacity: 0;
+  transform: translateX(28px);
+  pointer-events: none;
+}
+
+.dynamic-island[data-state="player"] .view-player,
+.dynamic-island.hover-expanded:not([data-state="lyrics"]) .view-player {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: all;
+}
+
+/* =========================================================
+   STATE 1: MINIMALIST GLOWING WHITE OVALS (Persis Gambar Awal)
+   ========================================================= */
+.view-eyes {
+  align-items: center;
+  justify-content: center;
+}
+
+.glow-eyes-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.08s ease-out;
+  z-index: 2;
+}
+
+.glow-oval-eye {
+  width: 13.5px;
+  height: 22px;
+  /* Mata putih bersih bersinar persis seperti di gambar */
+  background: #ffffff;
+  border-radius: 50% / 55%;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.95), 0 0 24px rgba(255, 255, 255, 0.65);
+  animation: glowEyeBlink 4.5s infinite cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center center;
+  flex-shrink: 0;
+}
+
+@keyframes glowEyeBlink {
+  0%, 94%, 100% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+  97% {
+    transform: scaleY(0.06);
+    opacity: 0.9;
+  }
+}
+
+/* =========================================================
+   STATE 2: COMPACT BAR (Ring + Jam + Waveform)
+   ========================================================= */
+.view-compact {
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+}
+
+.compact-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* =========================================================
+   CIRCULAR BATTERY GAUGE (Persis Gambar Referensi)
+   Dark Green Track, Vivid Emerald Arc, White Lightning Bolt, Red when Low
+   ========================================================= */
+.battery-gauge {
+  position: relative;
+  width: 21px;
+  height: 21px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.battery-gauge:hover {
+  transform: scale(1.1);
+}
+
+.battery-gauge.mini {
+  width: 16px;
+  height: 16px;
+}
+
+.battery-gauge-chart {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.gauge-bg {
+  fill: none;
+  stroke: #123d24; /* Jalur sisa berwarna hijau gelap pekat seperti di gambar */
+  stroke-width: 5.2;
+  transition: stroke 0.3s ease;
+}
+
+.gauge-fill {
+  fill: none;
+  stroke: #22c55e; /* Hijau emerald menyala */
+  stroke-width: 5.2;
+  stroke-linecap: round;
+  transition: stroke-dasharray 0.4s cubic-bezier(0.4, 0, 0.2, 1), stroke 0.3s ease;
+}
+
+/* Saat baterai habis / kritis (<= 20%), otomatis ganti merah */
+.battery-gauge.low .gauge-bg {
+  stroke: #3b1414; /* Jalur sisa merah gelap */
+}
+
+.battery-gauge.low .gauge-fill {
+  stroke: #ef4444; /* Merah menyala */
+  filter: drop-shadow(0 0 3px rgba(239, 68, 68, 0.8));
+}
+
+/* Animasi pulse lembut saat sedang mengecas */
+.battery-gauge.charging .gauge-fill {
+  animation: gaugeChargingPulse 2s infinite ease-in-out;
+}
+
+@keyframes gaugeChargingPulse {
+  0%, 100% { filter: drop-shadow(0 0 2px rgba(34, 197, 94, 0.5)); }
+  50% { filter: drop-shadow(0 0 5px rgba(34, 197, 94, 0.95)); }
+}
+
+.battery-gauge.low.charging .gauge-fill {
+  animation: gaugeChargingLowPulse 2s infinite ease-in-out;
+}
+
+@keyframes gaugeChargingLowPulse {
+  0%, 100% { filter: drop-shadow(0 0 2px rgba(239, 68, 68, 0.5)); }
+  50% { filter: drop-shadow(0 0 5px rgba(239, 68, 68, 0.95)); }
+}
+
+.gauge-bolt {
+  position: absolute;
+  width: 8.5px;
+  height: 8.5px;
+  color: #ffffff; /* Putih bersih solid seperti di gambar referensi */
+  pointer-events: none;
+  z-index: 2;
+  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.9));
+}
+
+.battery-gauge.mini .gauge-bolt {
+  width: 7px;
+  height: 7px;
+}
+
+.battery-ring {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.battery-ring.mini {
+  width: 15px;
+  height: 15px;
+}
+
+.circular-chart {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.circle-bg {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.18);
+  stroke-width: 4;
+}
+
+.circle {
+  fill: none;
+  stroke-width: 4.5;
+  stroke: #22c55e;
+  stroke-linecap: round;
+  transition: stroke-dasharray 0.4s ease;
+  filter: drop-shadow(0 0 3px rgba(34, 197, 94, 0.7));
+}
+
+.bolt-icon {
+  position: absolute;
+  font-size: 8px;
+  color: #22c55e;
+  font-weight: 900;
+  text-shadow: 0 0 4px rgba(34, 197, 94, 0.9);
+  pointer-events: none;
+}
+
+.battery-ring.charging-pulse .circle {
+  animation: chargingGlow 1.8s infinite ease-in-out;
+}
+
+@keyframes chargingGlow {
+  0%, 100% { filter: drop-shadow(0 0 3px rgba(34, 197, 94, 0.6)); }
+  50% { filter: drop-shadow(0 0 8px rgba(34, 197, 94, 1)); }
+}
+
+.digital-clock {
+  font-size: 15.5px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #ffffff;
+}
+
+/* Waveform Equalizer Bar */
+.equalizer {
+  display: flex;
+  align-items: center;
+  gap: 2.5px;
+  height: 16px;
+}
+
+.equalizer.mini {
+  height: 13px;
+  gap: 2px;
+}
+
+.equalizer .bar {
+  width: 3px;
+  background-color: #ffffff;
+  border-radius: 3px;
+  display: inline-block;
+  animation: eqBounce 1.2s ease-in-out infinite;
+}
+
+.equalizer.mini .bar {
+  width: 2.5px;
+}
+
+.equalizer .bar-1 { height: 12px; animation-delay: 0.1s; }
+.equalizer .bar-2 { height: 7px;  animation-delay: 0.35s; }
+.equalizer .bar-3 { height: 16px; animation-delay: 0.2s; }
+.equalizer .bar-4 { height: 10px; animation-delay: 0.45s; }
+
+.equalizer.paused .bar {
+  animation-play-state: paused;
+  height: 3px !important;
+  opacity: 0.4;
+}
+
+@keyframes eqBounce {
+  0%, 100% { transform: scaleY(0.35); }
+  50% { transform: scaleY(1); }
+}
+
+/* =========================================================
+   STATE 3 & 4: CHARGING & TWS BANNERS (Persis Gambar 1 & 2)
+   ========================================================= */
+.view-charging,
+.view-tws {
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  width: 100%;
+  height: 100%;
+}
+
+.banner-left {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.banner-middle {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 12px;
+  min-width: 0;
+  text-align: left;
+}
+
+.banner-title {
+  margin: 0;
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.banner-subtitle {
+  margin: 0;
+  font-size: 11px;
+  color: #9ca3af;
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.banner-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-shrink: 0;
+}
+
+.charging-big-percent {
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+  margin-right: 2px;
+}
+
+/* =========================================================
+   TWS SPECIFIC STYLING (Persis Video 00:09)
+   ========================================================= */
+.tws-bluetooth-badge {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #0284c7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 12px rgba(2, 132, 199, 0.7);
+  flex-shrink: 0;
+  animation: btBadgePulse 2.4s infinite ease-in-out;
+}
+
+@keyframes btBadgePulse {
+  0%, 100% {
+    box-shadow: 0 0 8px rgba(2, 132, 199, 0.5);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 16px rgba(56, 189, 248, 0.9), 0 0 24px rgba(2, 132, 199, 0.4);
+    transform: scale(1.06);
+  }
+}
+
+/* Container Headphone Beranimasi dengan Gelombang Sonar (Persis Video) */
+.headphone-animated-wrap {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Aura Luminous Biru Lembut di Belakang Headset */
+.headphone-backlight-aura {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.4) 0%, rgba(2, 132, 199, 0.15) 55%, transparent 75%);
+  animation: hpAuraPulse 2.4s infinite ease-in-out;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes hpAuraPulse {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 0.95;
+    transform: scale(1.18);
+    filter: blur(4px);
+  }
+}
+
+/* Riak Gelombang Suara Melingkar (Expanding Sonar Rings) */
+.tws-sonar-ring {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1.6px solid rgba(255, 255, 255, 0.7);
+  pointer-events: none;
+  transform-origin: center;
+  z-index: 1;
+}
+
+.tws-sonar-ring.ring-1 {
+  animation: twsSonarWave 2.4s infinite cubic-bezier(0.16, 0.8, 0.25, 1);
+}
+
+.tws-sonar-ring.ring-2 {
+  animation: twsSonarWave 2.4s infinite 0.95s cubic-bezier(0.16, 0.8, 0.25, 1);
+}
+
+@keyframes twsSonarWave {
+  0% {
+    transform: scale(0.62);
+    opacity: 0.95;
+    border-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.9);
+  }
+  100% {
+    transform: scale(1.95);
+    opacity: 0;
+    border-color: rgba(56, 189, 248, 0);
+    box-shadow: 0 0 24px rgba(56, 189, 248, 0);
+  }
+}
+
+.headphone-badge-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1.2px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.35);
+  backdrop-filter: blur(5px);
+}
+
+/* Animasi Bass Groove / Nodding Irama Musik pada Headphone */
+.headphone-svg-animated {
+  display: block;
+  animation: hpGrooveBeat 1.8s infinite ease-in-out;
+  transform-origin: 16px 16px;
+}
+
+@keyframes hpGrooveBeat {
+  0%, 100% {
+    transform: translateY(0px) scale(1) rotate(0deg);
+  }
+  20% {
+    transform: translateY(-2.2px) scale(1.08, 0.95) rotate(-3.5deg);
+  }
+  45% {
+    transform: translateY(0.5px) scale(0.96, 1.03) rotate(0deg);
+  }
+  70% {
+    transform: translateY(-1.6px) scale(1.05, 0.97) rotate(2.5deg);
+  }
+  88% {
+    transform: translateY(0px) scale(1) rotate(0deg);
+  }
+}
+
+/* Gelombang Suara di Samping Earcup (Sound Waves) */
+.hp-wave {
+  animation: hpWavePulse 1.8s infinite ease-in-out;
+  transform-origin: 16px 16px;
+}
+
+.hp-wave.wave-l1,
+.hp-wave.wave-r1 {
+  animation-delay: 0s;
+}
+
+.hp-wave.wave-l2,
+.hp-wave.wave-r2 {
+  animation-delay: 0.25s;
+}
+
+@keyframes hpWavePulse {
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(0.85);
+    stroke: rgba(56, 189, 248, 0.3);
+  }
+  35% {
+    opacity: 1;
+    transform: scale(1.18);
+    stroke: #38bdf8;
+    filter: drop-shadow(0 0 4px #38bdf8);
+  }
+  65% {
+    opacity: 0.45;
+    transform: scale(1);
+    stroke: rgba(56, 189, 248, 0.5);
+  }
+}
+
+/* =========================================================
+   VOLUME HUD BANNER STYLING (Persis Video 00:15)
+   ========================================================= */
+.view-volume {
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  width: 100%;
+  height: 100%;
+  gap: 12px;
+}
+
+.volume-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+}
+
+.volume-svg {
+  display: block;
+}
+
+.volume-bar-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.volume-bar-track {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.22);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.volume-bar-fill {
+  height: 100%;
+  background: #ffffff;
+  border-radius: 4px;
+  transition: width 0.1s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+}
+
+/* =========================================================
+   HAPTIC VIBRATION / SHAKE EFFECT (SAAT VOLUME 0% ATAU 100%)
+   ========================================================= */
+.dynamic-island.volume-shake {
+  animation: volumeHapticShake 0.42s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes volumeHapticShake {
+  0% {
+    transform: translateX(0px);
+  }
+  15% {
+    transform: translateX(-5px);
+  }
+  30% {
+    transform: translateX(5px);
+  }
+  45% {
+    transform: translateX(-3.5px);
+  }
+  60% {
+    transform: translateX(3.5px);
+  }
+  75% {
+    transform: translateX(-1.8px);
+  }
+  90% {
+    transform: translateX(1.8px);
+  }
+  100% {
+    transform: translateX(0px);
+  }
+}
+
+.volume-icon-wrap.volume-icon-shake {
+  animation: volumeIconJitter 0.38s ease-in-out both;
+}
+
+@keyframes volumeIconJitter {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+  }
+  20% {
+    transform: scale(1.25) rotate(-12deg);
+  }
+  40% {
+    transform: scale(0.9) rotate(12deg);
+  }
+  60% {
+    transform: scale(1.18) rotate(-7deg);
+  }
+  80% {
+    transform: scale(0.95) rotate(5deg);
+  }
+}
+
+/* =========================================================
+   WELCOME / STARTUP BANNER STYLING (Popup Keren Saat Nyala)
+   ========================================================= */
+.view-welcome {
+  padding: 0 16px;
+  height: 100%;
+  align-items: center;
+}
+
+/* =========================================================
+   ROBOT ANIMATIONS & STYLES (Robot Melayang, Dada-Dada & Lewat)
+   ========================================================= */
+.welcome-robot-wrap {
+  width: 40px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  filter: drop-shadow(0 2px 8px rgba(56, 189, 248, 0.45));
+}
+
+.welcome-robot-wrap:hover {
+  transform: scale(1.15) translateY(-2px);
+}
+
+.welcome-robot-wrap.spin-flip {
+  animation: robot360Spin 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes robot360Spin {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(1.28); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+.dynamic-island[data-state="welcome"] .welcome-robot-wrap {
+  animation: robotFlyIn 0.85s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Robot terbang masuk dari kiri ("robot lewat") lalu menetap */
+@keyframes robotFlyIn {
+  0% {
+    transform: translateX(-45px) scale(0.65) rotate(-16deg);
+    opacity: 0;
+  }
+  65% {
+    transform: translateX(4px) scale(1.1) rotate(4deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0px) scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+.robot-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* Badan Robot Melayang Halus Naik Turun */
+.robot-body-group {
+  animation: robotHover 2s infinite ease-in-out;
+  transform-origin: 22px 25px;
+}
+
+@keyframes robotHover {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-3.2px) rotate(1.8deg);
+  }
+}
+
+/* Tangan Kanan Robot Dada-Dada / Melambai-lambai 👋 */
+.robot-arm-right-group {
+  transform-origin: 31px 22px;
+  animation: robotWave 0.72s infinite ease-in-out;
+}
+
+@keyframes robotWave {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  22% {
+    transform: rotate(26deg);
+  }
+  45% {
+    transform: rotate(-10deg);
+  }
+  68% {
+    transform: rotate(28deg);
+  }
+  85% {
+    transform: rotate(-5deg);
+  }
+}
+
+/* Jet Thruster Glow di Bawah Kaki Robot */
+.robot-thrust {
+  transform-origin: 22px 38px;
+  animation: thrustPulse 0.9s infinite alternate ease-in-out;
+}
+
+@keyframes thrustPulse {
+  0% {
+    transform: scaleX(0.8) scaleY(0.7);
+    opacity: 0.6;
+    filter: drop-shadow(0 0 2px #38bdf8);
+  }
+  100% {
+    transform: scaleX(1.3) scaleY(1.4);
+    opacity: 1;
+    filter: drop-shadow(0 0 6px #38bdf8) drop-shadow(0 0 10px #0284c7);
+  }
+}
+
+/* Antena Robot Berkedip Oranye Menyala */
+.antenna-ball {
+  animation: antennaPing 1.2s infinite alternate ease-in-out;
+}
+
+@keyframes antennaPing {
+  0% {
+    fill: #f97316;
+    filter: drop-shadow(0 0 2px #f97316);
+  }
+  100% {
+    fill: #fdba74;
+    filter: drop-shadow(0 0 6px #ea580c) drop-shadow(0 0 9px #f97316);
+  }
+}
+
+/* Core Reactor di Dada Robot Berdenyut */
+.core-light {
+  transform-origin: 22px 27.5px;
+  animation: corePulse 1.5s infinite ease-in-out;
+}
+
+@keyframes corePulse {
+  0%, 100% {
+    transform: scale(0.8);
+    opacity: 0.75;
+  }
+  50% {
+    transform: scale(1.25);
+    opacity: 1;
+    filter: drop-shadow(0 0 4px #38bdf8);
+  }
+}
+
+/* Mata LED Digital Robot Berkedip Alami */
+.robot-eyes {
+  transform-origin: 22px 16.5px;
+  animation: robotBlink 3.6s infinite ease-in-out;
+}
+
+@keyframes robotBlink {
+  0%, 93%, 100% {
+    transform: scaleY(1);
+  }
+  96% {
+    transform: scaleY(0.08);
+  }
+}
+
+/* Kilauan Bintang Saat Dada-Dada */
+.wave-sparkle {
+  transform-origin: 41px 5px;
+  animation: sparkleTwinkle 0.72s infinite ease-in-out;
+}
+
+@keyframes sparkleTwinkle {
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(0.6);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.3);
+    filter: drop-shadow(0 0 4px #fbbf24);
+  }
+}
+
+/* =========================================================
+   COMPACT MODE MINI ROBOT (Di Sebelah Jam Dynamic Island)
+   ========================================================= */
+.compact-robot-wrap {
+  width: 26px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  filter: drop-shadow(0 1px 5px rgba(56, 189, 248, 0.4));
+  flex-shrink: 0;
+}
+
+.compact-robot-wrap:hover {
+  transform: scale(1.2) translateY(-1px);
+}
+
+.compact-robot-wrap.spin-flip {
+  animation: robot360Spin 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* =========================================================
+   ROBOT LEWAT (ANIMASI ROBOT JALAN MELINTAS DI ISLAND)
+   ========================================================= */
+.robot-walker-runner {
+  position: absolute;
+  bottom: 0px;
+  left: -40px;
+  width: 32px;
+  height: 32px;
+  pointer-events: none;
+  z-index: 10;
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 2px 6px rgba(56, 189, 248, 0.6));
+}
+
+.robot-walker-runner.active {
+  opacity: 1;
+  animation: robotStrollAcross 7.5s cubic-bezier(0.45, 0.05, 0.55, 0.95) forwards;
+}
+
+@keyframes robotStrollAcross {
+  /* Muncul dari kiri dan mulai jalan */
+  0% {
+    left: -38px;
+    transform: translateY(0px) scale(0.9);
+    opacity: 0;
+  }
+  8% {
+    left: 20px;
+    opacity: 1;
+    transform: translateY(-2px) scale(1);
+  }
+  /* Jalan sampai tengah */
+  40% {
+    left: calc(50% - 16px);
+    transform: translateY(0px) scale(1.05);
+  }
+  /* Berhenti sebentar di tengah dan dada-dada ke user! */
+  45%, 62% {
+    left: calc(50% - 16px);
+    transform: translateY(-4px) scale(1.15);
+  }
+  /* Lanjut jalan ke kanan sampai keluar layar */
+  70% {
+    left: calc(50% + 20px);
+    transform: translateY(0px) scale(1);
+    opacity: 1;
+  }
+  95% {
+    left: calc(100% + 15px);
+    opacity: 0.9;
+    transform: translateY(-2px) scale(0.95);
+  }
+  100% {
+    left: calc(100% + 40px);
+    opacity: 0;
+    transform: translateY(0px) scale(0.85);
+  }
+}
+
+.welcome-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.35);
+  border-radius: 12px;
+  padding: 3px 8px;
+  flex-shrink: 0;
+}
+
+.online-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 8px #22c55e;
+  animation: pulseDot 2s infinite ease-in-out;
+}
+
+@keyframes pulseDot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.3); opacity: 0.6; }
+}
+
+.welcome-pill-text {
+  font-size: 9.5px;
+  font-weight: 800;
+  color: #22c55e;
+  letter-spacing: 0.5px;
+}
+
+@keyframes twsRipple {
+  0% { transform: scale(0.85); opacity: 0.8; }
+  100% { transform: scale(1.25); opacity: 0; }
+}
+
+/* =========================================================
+   STATE 4: EXPANDED PLAYER
+   ========================================================= */
+.view-player {
+  flex-direction: column;
+  padding: 10px 18px 6px 18px;
+  justify-content: space-between;
+}
+
+.player-top-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+/* =========================================================
+   VINYL RECORD DISC (PIRINGAN HITAM BULAT & MUTER)
+   ========================================================= */
+.album-art-wrap {
+  position: relative;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.album-art {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%; /* Bulat sempurna piringan hitam */
+  background: radial-gradient(circle, #27272a 0%, #18181b 50%, #09090b 100%);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.75), 0 0 10px rgba(249, 115, 22, 0.25);
+  position: relative;
+  overflow: hidden;
+  border: 1.5px solid rgba(255, 255, 255, 0.22);
+  flex-shrink: 0;
+  /* Animasi muter piringan hitam */
+  animation: spinVinyl 8s linear infinite;
+  animation-play-state: paused; /* Default pause saat tidak ada lagu / lagu di-pause */
+  transition: box-shadow 0.3s ease;
+}
+
+/* Saat musik sedang diputar di Spotify, piringan berputar mulus */
+.album-art.spinning {
+  animation-play-state: running;
+}
+
+@keyframes spinVinyl {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Tekstur Alur Piringan Hitam & Refleksi Mengkilap (Vinyl Grooves & Sheen) */
+.album-art::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: 
+    radial-gradient(circle at center, transparent 32%, rgba(0, 0, 0, 0.28) 34%, transparent 36%, rgba(0, 0, 0, 0.2) 62%, transparent 64%, rgba(0, 0, 0, 0.35) 90%),
+    conic-gradient(from 45deg at 50% 50%, transparent 0deg, rgba(255, 255, 255, 0.22) 40deg, transparent 80deg, transparent 180deg, rgba(255, 255, 255, 0.22) 220deg, transparent 260deg);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Lubang Poros & Cincin Label Tengah Piringan Hitam */
+.album-art .vinyl-center {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #0f172a 35%, #f97316 42%, #1e293b 85%);
+  border: 1.5px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.85);
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+}
+
+/* Titik Poros Tengah (Spindle Hole) */
+.album-art .vinyl-center::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #000000;
+  border: 0.8px solid rgba(255, 255, 255, 0.45);
+}
+
+.player-info-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+  gap: 2px;
+}
+
+.info-row-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.header-datetime-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* =========================================================
+   CUTE ANIMATED MUSIC COMPANION (Gerak-gerak Lucu)
+   ========================================================= */
+.cute-companion {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+  padding: 0 1px;
+}
+
+.cute-companion:hover {
+  transform: scale(1.18);
+}
+
+.cute-companion.pet-bounce {
+  animation: petPop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes petPop {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.32) translateY(-3px); }
+  65% { transform: scale(0.9) translateY(1px); }
+  100% { transform: scale(1); }
+}
+
+.pet-svg {
+  overflow: visible;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.45));
+}
+
+/* Karakter Berjoget & Menggoyangkan Kepala ke Irama Musik */
+.pet-character {
+  transform-origin: 20px 24px;
+  animation: petGroove 1.15s infinite ease-in-out;
+}
+
+@keyframes petGroove {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-2.4px) rotate(-4deg);
+  }
+  50% {
+    transform: translateY(0.6px) rotate(0deg);
+  }
+  75% {
+    transform: translateY(-2.4px) rotate(4deg);
+  }
+}
+
+/* Telinga Kucing Bergerak-gerak Lucu (Twitch) */
+.pet-ear.left {
+  transform-origin: 13px 13px;
+  animation: earTwitchLeft 2.4s infinite ease-in-out;
+}
+
+.pet-ear.right {
+  transform-origin: 27px 13px;
+  animation: earTwitchRight 2.4s infinite ease-in-out 0.35s;
+}
+
+@keyframes earTwitchLeft {
+  0%, 82%, 100% { transform: rotate(0deg); }
+  87% { transform: rotate(-9deg); }
+  93% { transform: rotate(5deg); }
+}
+
+@keyframes earTwitchRight {
+  0%, 82%, 100% { transform: rotate(0deg); }
+  87% { transform: rotate(9deg); }
+  93% { transform: rotate(-5deg); }
+}
+
+/* Not Balok Mengapung Lucu (Floating Music Notes) */
+.music-note {
+  position: absolute;
+  font-size: 10px;
+  font-weight: 800;
+  color: #f97316;
+  text-shadow: 0 0 8px rgba(249, 115, 22, 0.85);
+  pointer-events: none;
+  opacity: 0;
+  z-index: 3;
+}
+
+.note-1 {
+  left: -2px;
+  top: 1px;
+  animation: floatNoteLeft 2.4s infinite ease-out;
+}
+
+.note-2 {
+  right: -3px;
+  top: 4px;
+  animation: floatNoteRight 2.8s infinite 1.2s ease-out;
+}
+
+@keyframes floatNoteLeft {
+  0% {
+    transform: translate(0, 0) scale(0.6) rotate(-10deg);
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.95;
+  }
+  75% {
+    opacity: 0.75;
+  }
+  100% {
+    transform: translate(-9px, -18px) scale(1.15) rotate(-30deg);
+    opacity: 0;
+  }
+}
+
+@keyframes floatNoteRight {
+  0% {
+    transform: translate(0, 0) scale(0.6) rotate(10deg);
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.95;
+  }
+  75% {
+    opacity: 0.75;
+  }
+  100% {
+    transform: translate(9px, -19px) scale(1.15) rotate(30deg);
+    opacity: 0;
+  }
+}
+
+.player-date-time {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: -0.1px;
+}
+
+.player-date-time b {
+  color: #ffffff;
+  font-weight: 700;
+  margin-left: 2px;
+}
+
+.info-row-middle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.track-title {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 260px;
+}
+
+.next-view-btn {
+  background: rgba(255, 255, 255, 0.18);
+  border: none;
+  color: #ffffff;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.next-view-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.info-row-bottom {
+  width: 100%;
+}
+
+.track-artist {
+  font-size: 11px;
+  color: #9ca3af;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 270px;
+}
+
+/* Timeline Slider */
+.timeline-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  margin-top: 4px;
+}
+
+.time-current,
+.time-remaining {
+  font-size: 10px;
+  color: #9ca3af;
+  font-variant-numeric: tabular-nums;
+  min-width: 28px;
+}
+
+.time-remaining {
+  text-align: right;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 2px;
+  position: relative;
+  cursor: pointer;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #ffffff;
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+.progress-thumb {
+  position: absolute;
+  top: 50%;
+  width: 9px;
+  height: 9px;
+  background: #ffffff;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+}
+
+.progress-bar:hover .progress-thumb {
+  opacity: 1;
+}
+
+/* Controls Playback */
+.player-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 3px;
+}
+
+.control-btn {
+  background: none;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px;
+  border-radius: 50%;
+  transition: color 0.15s, transform 0.15s, background-color 0.15s;
+}
+
+.control-btn:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  transform: scale(1.1);
+}
+
+.control-btn:active {
+  transform: scale(0.92);
+}
+
+.playback-buttons {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin: 0 auto;
+  transform: translateX(-10px);
+}
+
+.play-btn {
+  width: 26px;
+  height: 26px;
+}
+
+.lyrics-btn {
+  color: #9ca3af;
+}
+
+.lyrics-btn:hover,
+.lyrics-btn.active {
+  color: #f97316;
+}
+
+.pagination-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  margin-top: 2px;
+}
+
+.pagination-bar .dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pagination-bar .dot:hover {
+  background: rgba(255, 255, 255, 0.75);
+  transform: scale(1.3);
+}
+
+.pagination-bar .dot.active {
+  width: 14px;
+  border-radius: 3px;
+  background: #ffffff;
+}
+
+/* =========================================================
+   STATE 5: EXPANDED LYRICS (Smooth Transform Scrolling)
+   ========================================================= */
+.view-lyrics {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px 16px;
+  gap: 12px;
+}
+
+.lyrics-left-player {
+  width: 42%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.lyrics-player-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.album-art.small {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border-width: 1.2px;
+  animation: spinVinyl 8s linear infinite;
+  animation-play-state: paused;
+}
+
+.album-art.small.spinning {
+  animation-play-state: running;
+}
+
+.album-art.small .vinyl-center {
+  width: 11px;
+  height: 11px;
+  border-width: 1.2px;
+}
+
+.album-art.small .vinyl-center::after {
+  width: 3px;
+  height: 3px;
+}
+
+.track-details.small .track-title {
+  font-size: 13px;
+  max-width: 160px;
+}
+
+.track-details.small .track-artist {
+  font-size: 10.5px;
+  max-width: 160px;
+}
+
+.timeline-container.small {
+  margin: 4px 0;
+}
+
+.player-controls.small {
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.lyrics-divider {
+  width: 1px;
+  height: 82%;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Viewport Lirik dengan Apple-grade Edge Mask Fade */
+.lyrics-right-content {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  text-align: left;
+}
+
+.lyrics-viewport {
+  width: 100%;
+  height: 100px;
+  overflow: hidden;
+  position: relative;
+  mask-image: linear-gradient(180deg, transparent 0%, black 18%, black 82%, transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, black 18%, black 82%, transparent 100%);
+}
+
+.lyrics-list {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  /* Animasi Transisi Halus Continuous Transform */
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+  padding: 34px 0;
+}
+
+.lyric-item {
+  margin: 0;
+  font-size: 11.5px;
+  color: rgba(255, 255, 255, 0.36);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transform-origin: left center;
+  line-height: 1.35;
+}
+
+.lyric-item.current {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #ffffff;
+  transform: scale(1.04);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(249, 115, 22, 0.65);
+}
+
+.lyric-item.future.dim {
+  opacity: 0.25;
+}
+
+.hidden {
+  display: none !important;
+}
